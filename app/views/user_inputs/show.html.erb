@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Num of columns:</strong>
+  <%= @user_input.num_of_columns %>
+</p>
+
+<p>
+  <strong>Input List:</strong>
+  <%= @user_input.csv %>
+</p>
+
+<p>
+  <strong>Exploded Csv:</strong>
+  <%= @user_input.exploded_csv %>
+</p>
+
+<p>
+  <strong>Table for Display </strong>
+  <%= raw(@user_input.table_for_display(@user_input.num_of_columns)) %>
+</p>
+
+<%= link_to 'Edit', edit_user_input_path(@user_input) %> |
+<%= link_to 'Back', user_inputs_path %>
