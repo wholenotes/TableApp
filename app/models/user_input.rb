@@ -12,23 +12,32 @@ class UserInput < ApplicationRecord
   end
 
   def table_for_display(num_of_columns)
-    html_for_table = "<table>"
+    html_for_table = "<table><tr>"
+
+    #generate column headings
+    for i in 1..num_of_columns
+      html_for_table += "<td>" + i.to_s + "</td>"
+    end
+    html_for_table += "</tr>"
 
     exploded_csv.each_with_index do |csv_element, i|
       #start a new row if it's the first cell of the row
-
       if (i + 1) % num_of_columns == 1
         html_for_table += "<tr>"
       end
 
       html_for_table += "<td>" + csv_element.to_s + "</td>"
 
-      #close the row if it's reached the last cell of the row or if it's reached the last element of the exploded csv
-      if (i + 1) % num_of_columns == 0 || i == num_of_csv_elements
+      #close the row if it's reached the last cell of the row
+      if (i + 1) % num_of_columns == 0
+        html_for_table += "</tr>"
+      elsif i+1 == num_of_csv_elements # reached the last element
+        num_of_empty_cells = num_of_columns - exploded_csv.length % num_of_columns
+        num_of_empty_cells.times do
+          html_for_table += "<td>&nbsp</td>"
+        end # fill any empty cells in last row
         html_for_table += "</tr>"
       end
-      puts "html_for_table-------"
-      puts html_for_table
     end
 
     html_for_table += "</table>"
